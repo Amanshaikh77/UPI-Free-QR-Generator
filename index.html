@@ -41,7 +41,6 @@ body{
   margin:auto 0;
 }
 
-/* HEADER WITH RIGHT SIDE HOW IT WORKS BUTTON */
 .title-header{text-align:center;margin-bottom:12px;}
 .title-header h1{
   font-size:22px;
@@ -54,7 +53,6 @@ body{
 }
 .title-header p{font-size:12px;color:#64748b;margin-top:3px;font-weight:500;}
 
-/* SUBHEADER ACTION BAR (BADGE + HOW IT WORKS BUTTON) */
 .sub-header-bar{
   display:flex;
   align-items:center;
@@ -89,12 +87,7 @@ body{
   box-shadow:0 2px 6px rgba(37,99,235,0.08);
   transition:all 0.2s;
 }
-.btn-how-it-works:hover{
-  background:#eff6ff;
-  border-color:#2563eb;
-  transform:translateY(-1px);
-}
-.btn-how-it-works:active{transform:scale(0.97);}
+.btn-how-it-works:hover{background:#eff6ff;border-color:#2563eb;}
 
 .app-layout{
   display:grid;
@@ -136,7 +129,6 @@ body{
   color:#1e3a8a !important;
   font-weight:800 !important;
   cursor:not-allowed !important;
-  letter-spacing:0.2px;
 }
 
 .color-row{display:flex;gap:10px;margin-bottom:12px;}
@@ -236,7 +228,7 @@ body{
 
 .no-payee-alert{font-size:11px;color:#94a3b8;padding:8px 4px;}
 
-/* QR PREVIEW */
+/* QR PREVIEW CARD */
 .qr-preview-box{
   background:linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
   border-radius:20px;
@@ -321,12 +313,12 @@ body{
 
 .btn-download{
   width:100%;
-  max-width:210px;
-  padding:10px;
+  max-width:230px;
+  padding:11px;
   background:linear-gradient(135deg, #16a34a 0%, #15803d 100%);
   color:#fff;
   font-weight:800;
-  font-size:12px;
+  font-size:12.5px;
   border:0;
   border-radius:12px;
   cursor:pointer;
@@ -337,7 +329,7 @@ body{
   box-shadow:0 10px 18px -4px rgba(22,163,74,0.35);
 }
 
-/* MODAL OVERLAYS */
+/* MODALS */
 .modal-overlay{
   position:fixed;
   top:0;left:0;right:0;bottom:0;
@@ -381,8 +373,6 @@ body{
   font-size:11.5px;
   font-weight:800;
   cursor:pointer;
-  transition:all 0.2s;
-  min-width:65px;
 }
 .verify-status-text{font-size:11.5px;margin-top:5px;font-weight:700;}
 
@@ -399,7 +389,7 @@ body{
   font-size:13px;
 }
 
-/* HOW IT WORKS MODAL DETAILS */
+/* HOW IT WORKS */
 .hiw-body{
   overflow-y:auto;
   padding-right:4px;
@@ -430,17 +420,8 @@ body{
   justify-content:center;
   flex-shrink:0;
 }
-.hiw-step-text h4{
-  font-size:13px;
-  color:#0f172a;
-  font-weight:800;
-  margin-bottom:2px;
-}
-.hiw-step-text p{
-  font-size:11.5px;
-  color:#64748b;
-  line-height:1.4;
-}
+.hiw-step-text h4{font-size:13px;color:#0f172a;font-weight:800;margin-bottom:2px;}
+.hiw-step-text p{font-size:11.5px;color:#64748b;line-height:1.4;}
 .hiw-features-box{
   background:#eff6ff;
   border:1px solid #bfdbfe;
@@ -450,9 +431,8 @@ body{
   color:#1e40af;
   line-height:1.45;
 }
-.hiw-features-box b{color:#1d4ed8;}
 
-/* MANAGE PAYEE LIST */
+/* MANAGE PAYEES */
 .manage-list{
   overflow-y:auto;
   flex:1;
@@ -473,7 +453,6 @@ body{
 }
 .manage-item-info h4{font-size:13px;font-weight:800;color:#0f172a;}
 .manage-item-info p{font-size:11px;color:#64748b;}
-.manage-item-info .verified-tag{font-size:9.5px;color:#16a34a;font-weight:800;}
 .manage-item-btns{display:flex;gap:6px;}
 .btn-item-del{
   background:#fef2f2;
@@ -503,11 +482,10 @@ body{
     <p>Instant UPI payment QR for Google Pay, PhonePe & Paytm</p>
   </div>
 
-  <!-- SUBHEADER ACTION BAR (MARK LOCATION: HOW IT WORKS BUTTON) -->
   <div class="sub-header-bar">
     <div class="free-badge">✓ 100% Free & Unlimited</div>
     <button type="button" class="btn-how-it-works" onclick="openHowItWorksModal()">
-      <span>ℹ️</span> How It Works
+      <span>ℹ️️</span> How It Works
     </button>
   </div>
 
@@ -536,7 +514,6 @@ body{
 
       <button class="btn-main" onclick="handleGenerateClick()">⚡ Generate QR Code</button>
 
-      <!-- PAYEE CAROUSEL -->
       <div class="payee-section">
         <div class="payee-top-bar">
           <span>💳 Payee (Swipe & Tap)</span>
@@ -573,7 +550,7 @@ body{
           <div id="qrcode" style="display:none;"></div>
         </div>
 
-        <button class="btn-download" id="btn-download" onclick="downloadQR()">⬇ Download QR (PNG)</button>
+        <button class="btn-download" id="btn-download" onclick="downloadCoolBrandedQR()">⬇ Download QR Card (PNG)</button>
       </div>
     </div>
   </div>
@@ -615,8 +592,8 @@ body{
       <div class="hiw-step">
         <div class="hiw-step-icon">4</div>
         <div class="hiw-step-text">
-          <h4>Download & Local Storage</h4>
-          <p>1-Click me clear PNG format me QR download karein. Aapke payees aapke browser ke private localStorage me safe rehte hain bina kisi login ke.</p>
+          <h4>Cool Branded Card Download</h4>
+          <p>Download karne par boring square QR nahi, balki ek stylish digital payment card save hota hai jisme aapka Payee Name, UPI ID aur Verified badge laga hota hai.</p>
         </div>
       </div>
 
@@ -629,7 +606,7 @@ body{
   </div>
 </div>
 
-<!-- ADD / EDIT PAYEE MODAL WITH AUTOMATION BANKING NAME -->
+<!-- ADD / EDIT PAYEE MODAL -->
 <div class="modal-overlay" id="payeeModal">
   <div class="modal-content">
     <div class="modal-header">
@@ -678,7 +655,6 @@ let payees = [];
 let activePayeeIndex = -1;
 let currentVerifiedBankName = "";
 
-/* HOW IT WORKS MODAL FUNCTIONS */
 function openHowItWorksModal() {
   document.getElementById("howItWorksModal").style.display = "flex";
 }
@@ -985,35 +961,115 @@ function generateQR() {
   }, 400);
 }
 
-function downloadQR() {
+// COOL BRANDED PAYMENT CARD GENERATOR (HIGH DEFINITION CANVAS)
+function downloadCoolBrandedQR() {
   const container = document.getElementById("qrcode");
-  const canvas = container.querySelector("canvas");
-  const img = container.querySelector("img");
-  let dataUrl = "";
+  const canvasSource = container.querySelector("canvas");
+  const imgSource = container.querySelector("img");
 
-  if (canvas) {
-    try {
-      dataUrl = canvas.toDataURL("image/png");
-    } catch (e) {}
-  }
-  
-  if (!dataUrl && img && img.src && img.src.startsWith("data:image")) {
-    dataUrl = img.src;
-  }
-
-  if (!dataUrl) {
+  if (!canvasSource && (!imgSource || !imgSource.src)) {
     alert("Pehle QR code generate karein!");
     return;
   }
 
-  const p = (payees && payees.length > 0 && activePayeeIndex >= 0) ? payees[activePayeeIndex] : { name: "UPI" };
-  const safeName = (p.name || "UPI").replace(/\s+/g, "_");
-  const link = document.createElement("a");
-  link.href = dataUrl;
-  link.download = `${safeName}_QR_${Date.now()}.png`;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
+  const p = (payees && payees.length > 0 && activePayeeIndex >= 0) ? payees[activePayeeIndex] : { name: "Merchant", vpa: "user@upi" };
+  const amt = document.getElementById("upi_amount").value.trim();
+  const note = document.getElementById("upi_note").value.trim();
+
+  // Create High-Res Standee Canvas (540 x 780 px)
+  const c = document.createElement("canvas");
+  c.width = 540;
+  c.height = 780;
+  const ctx = c.getContext("2d");
+
+  // 1. Background White Card with subtle gradient & border
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(0, 0, c.width, c.height);
+
+  // 2. Top Royal Blue Header Banner with branding
+  const grad = ctx.createLinearGradient(0, 0, c.width, 140);
+  grad.addColorStop(0, "#1e3a8a");
+  grad.addColorStop(1, "#2563eb");
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, c.width, 130);
+
+  // Brand Name on Header
+  ctx.fillStyle = "#ffffff";
+  ctx.font = "bold 24px -apple-system, BlinkMacSystemFont, Segoe UI, Roboto";
+  ctx.textAlign = "center";
+  ctx.fillText("⚡ UPI Free QR Generator", c.width / 2, 58);
+
+  ctx.fillStyle = "rgba(255, 255, 255, 0.85)";
+  ctx.font = "600 13px -apple-system, BlinkMacSystemFont, Segoe UI, Roboto";
+  ctx.fillText("Instant NPCI Dynamic Payment QR", c.width / 2, 86);
+
+  // 3. Payee Details Section
+  ctx.fillStyle = "#0f172a";
+  ctx.font = "bold 23px -apple-system, BlinkMacSystemFont, Segoe UI, Roboto";
+  ctx.fillText(p.name || "Merchant", c.width / 2, 185);
+
+  ctx.fillStyle = "#2563eb";
+  ctx.font = "600 15px -apple-system, BlinkMacSystemFont, Segoe UI, Roboto";
+  ctx.fillText(p.vpa, c.width / 2, 212);
+
+  // Verified Badge
+  ctx.fillStyle = "#16a34a";
+  ctx.font = "bold 13px -apple-system, BlinkMacSystemFont, Segoe UI, Roboto";
+  ctx.fillText("✓ Verified NPCI Account", c.width / 2, 236);
+
+  // Optional Amount
+  if (amt) {
+    ctx.fillStyle = "#0f172a";
+    ctx.font = "bold 20px -apple-system, BlinkMacSystemFont, Segoe UI, Roboto";
+    ctx.fillText("₹" + amt, c.width / 2, 268);
+  }
+
+  // 4. Draw QR Code into Center Canvas
+  const qrImage = new Image();
+  qrImage.crossOrigin = "anonymous";
+  
+  qrImage.onload = function() {
+    const qrSize = 310;
+    const qrX = (c.width - qrSize) / 2;
+    const qrY = amt ? 285 : 265;
+
+    // QR Outline Frame
+    ctx.fillStyle = "#f8fafc";
+    ctx.strokeStyle = "#e2e8f0";
+    ctx.lineWidth = 2;
+    ctx.roundRect ? ctx.roundRect(qrX - 15, qrY - 15, qrSize + 30, qrSize + 30, 16) : ctx.rect(qrX - 15, qrY - 15, qrSize + 30, qrSize + 30);
+    ctx.fill();
+    ctx.stroke();
+
+    // Draw the actual QR
+    ctx.drawImage(qrImage, qrX, qrY, qrSize, qrSize);
+
+    // 5. Footer Branding & Accepted Apps
+    const footerY = qrY + qrSize + 50;
+    ctx.fillStyle = "#475569";
+    ctx.font = "bold 13px -apple-system, BlinkMacSystemFont, Segoe UI, Roboto";
+    ctx.fillText("Accepted on all UPI Apps", c.width / 2, footerY);
+
+    ctx.fillStyle = "#64748b";
+    ctx.font = "600 12px -apple-system, BlinkMacSystemFont, Segoe UI, Roboto";
+    ctx.fillText("GPay • PhonePe • Paytm • BHIM • Cred • Amazon Pay", c.width / 2, footerY + 24);
+
+    // Final trigger download
+    const link = document.createElement("a");
+    const safeName = (p.name || "UPI").replace(/\s+/g, "_");
+    link.download = `${safeName}_UPI_QR_Card.png`;
+    link.href = c.toDataURL("image/png");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  // Source QR Data Extraction
+  if (canvasSource) {
+    qrImage.src = canvasSource.toDataURL("image/png");
+  } else if (imgSource && imgSource.src) {
+    qrImage.src = imgSource.src;
+  }
 }
 
 window.onload = function() {
