@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>UPI Free QR Generator - 100% Free & Unlimited</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+
+html, body{
+  min-height:100vh;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,sans-serif;
+  background:radial-gradient(circle at 50% 0%, #e0eafc 0%, #cfdef3 100%);
+  color:#0f172a;
+  overflow-x:hidden;
+}
+
+body{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+  padding:22px 14px 35px;
+}
+
+.card-box{
+  width:100%;
+  max-width:860px;
+  background:rgba(255, 255, 255, 0.94);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  border:1.5px solid rgba(255, 255, 255, 0.8);
+  border-radius:24px;
+  padding:22px 24px;
+  box-shadow:
+    0 20px 40px -15px rgba(30, 58, 138, 0.15),
+    0 0 0 1px rgba(226, 232, 240, 0.6);
+  margin:auto 0;
+}
+
+.title-header{text-align:center;margin-bottom:18px;}
+.title-header h1{
+  font-size:22px;
+  font-weight:900;
+  letter-spacing:-0.3px;
+  background:linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  display:inline-block;
+}
+.title-header p{font-size:12px;color:#64748b;margin-top:3px;font-weight:500;}
+.free-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  margin-top:6px;
+  background:linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+  color:#1d4ed8;
+  border:1px solid #bfdbfe;
+  font-size:10px;
+  font-weight:800;
+  padding:3px 12px;
+  border-radius:20px;
+}
+
+.app-layout{
+  display:grid;
+  grid-template-columns:1.15fr 1fr;
+  gap:22px;
+  align-items:center;
+}
+
+.form-group{margin-bottom:10px;}
+.form-group label{
+  display:block;
+  font-size:11px;
+  color:#475569;
+  margin-bottom:4px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:0.3px;
+}
+.form-group input{
+  width:100%;
+  padding:10px 14px;
+  background:#f8fafc;
+  border:1.5px solid #e2e8f0;
+  border-radius:12px;
+  color:#0f172a;
+  font-size:13.5px;
+  outline:none;
+  transition:all 0.2s;
+}
+.form-group input:focus{
+  border-color:#2563eb;
+  background:#ffffff;
+  box-shadow:0 0 0 4px rgba(37,99,235,0.12);
+}
+
+.color-row{display:flex;gap:10px;margin-bottom:12px;}
+.color-item{
+  flex:1;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:#f8fafc;
+  padding:7px 12px;
+  border-radius:12px;
+  border:1.5px solid #e2e8f0;
+}
+.color-item span{font-size:11px;color:#64748b;font-weight:700;}
+.color-item input[type="color"]{
+  border:0;
+  background:transparent;
+  width:24px;
+  height:24px;
+  cursor:pointer;
+}
+
+.btn-main{
+  width:100%;
+  padding:12px;
+  background:linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  color:#ffffff;
+  font-weight:800;
+  font-size:13.5px;
+  border:0;
+  border-radius:12px;
+  cursor:pointer;
+  box-shadow:0 10px 20px -5px rgba(37, 99, 235, 0.4);
+  transition:all 0.2s;
+  margin-bottom:12px;
+}
+.btn-main:active{transform:scale(0.98);}
+
+/* PAYEE CAROUSEL WITH MANAGE & ADD BUTTONS */
+.payee-section{
+  background:#f8fafc;
+  border:1.5px solid #e2e8f0;
+  border-radius:16px;
+  padding:12px;
+}
+.payee-top-bar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:8px;
+}
+.payee-top-bar span{font-size:10.5px;font-weight:800;color:#1e40af;text-transform:uppercase;}
+.payee-actions-row{display:flex;gap:6px;}
+
+.btn-action-small{
+  border:0;
+  font-size:11px;
+  font-weight:700;
+  padding:5px 10px;
+  border-radius:8px;
+  cursor:pointer;
+  transition:all 0.15s;
+}
+.btn-manage{
+  background:#eff6ff;
+  color:#2563eb;
+  border:1px solid #bfdbfe;
+}
+.btn-add{
+  background:linear-gradient(135deg, #2563eb, #1d4ed8);
+  color:#fff;
+  box-shadow:0 4px 8px rgba(37,99,235,0.25);
+}
+
+.payee-scroll-list{
+  display:flex;
+  gap:10px;
+  overflow-x:auto;
+  padding:4px 2px 6px;
+  -webkit-overflow-scrolling:touch;
+}
+.payee-scroll-list::-webkit-scrollbar{height:4px;}
+.payee-scroll-list::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:10px;}
+
+.payee-chip-card{
+  flex:0 0 auto;
+  min-width:140px;
+  background:#ffffff;
+  border:1.5px solid #e2e8f0;
+  border-radius:12px;
+  padding:8px 12px;
+  cursor:pointer;
+  transition:all 0.2s;
+  box-shadow:0 2px 4px rgba(0,0,0,0.03);
+}
+.payee-chip-card.active{
+  border-color:#2563eb;
+  background:linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+  box-shadow:0 6px 14px rgba(37,99,235,0.18);
+  transform:translateY(-2px);
+}
+.payee-chip-name{font-size:12px;font-weight:800;color:#0f172a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:125px;}
+.payee-chip-vpa{font-size:10px;color:#64748b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:125px;margin-top:1px;}
+
+.no-payee-alert{font-size:11px;color:#94a3b8;padding:8px 4px;}
+
+/* QR PREVIEW */
+.qr-preview-box{
+  background:linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border-radius:20px;
+  border:1.5px solid #e2e8f0;
+  padding:18px 14px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:12px;
+  justify-content:center;
+  box-shadow:0 15px 30px -10px rgba(0,0,0,0.06);
+  position:relative;
+}
+
+.qr-payee-header{text-align:center;width:100%;display:none;}
+.qr-payee-header small{font-size:9.5px;color:#2563eb;text-transform:uppercase;font-weight:800;}
+.qr-payee-header h3{font-size:15px;color:#0f172a;font-weight:800;margin-top:1px;}
+.qr-payee-header span{font-size:11px;color:#64748b;}
+
+#qrcode-wrapper{
+  background:#ffffff;
+  padding:12px;
+  border-radius:18px;
+  border:1.5px solid #e2e8f0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  width:180px;
+  height:180px;
+  max-width:100%;
+  box-sizing:border-box;
+  position:relative;
+  box-shadow:0 15px 30px -5px rgba(37,99,235,0.12);
+}
+
+.qr-loader{
+  position:absolute;
+  inset:0;
+  background:rgba(255,255,255,0.94);
+  backdrop-filter:blur(4px);
+  display:none;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  border-radius:16px;
+  gap:8px;
+  z-index:10;
+}
+.spinner-3d{
+  width:32px;
+  height:32px;
+  border:3.5px solid #dbeafe;
+  border-top:3.5px solid #2563eb;
+  border-radius:50%;
+  animation:spin 0.6s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg);}}
+.qr-loader span{font-size:11px;font-weight:800;color:#1e40af;}
+
+.qr-placeholder{
+  width:100%;
+  height:100%;
+  border:2px dashed #cbd5e1;
+  border-radius:12px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  color:#94a3b8;
+  font-size:11px;
+  text-align:center;
+  padding:8px;
+}
+.qr-placeholder svg{width:32px;height:32px;fill:#94a3b8;margin-bottom:4px;}
+
+#qrcode img, #qrcode canvas{
+  max-width:100% !important;
+  height:auto !important;
+  border-radius:6px;
+}
+
+.btn-download{
+  width:100%;
+  max-width:210px;
+  padding:10px;
+  background:linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+  color:#fff;
+  font-weight:800;
+  font-size:12px;
+  border:0;
+  border-radius:12px;
+  cursor:pointer;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  box-shadow:0 10px 18px -4px rgba(22,163,74,0.35);
+}
+
+/* MODAL OVERLAYS */
+.modal-overlay{
+  position:fixed;
+  top:0;left:0;right:0;bottom:0;
+  background:rgba(15,23,42,0.65);
+  backdrop-filter:blur(6px);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:999;
+  padding:14px;
+}
+.modal-content{
+  width:100%;
+  max-width:390px;
+  background:#ffffff;
+  border:1px solid #dbeafe;
+  border-radius:20px;
+  padding:20px;
+  box-shadow:0 25px 50px -12px rgba(0,0,0,0.25);
+  max-height:85vh;
+  display:flex;
+  flex-direction:column;
+}
+.modal-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:14px;
+}
+.modal-header h3{font-size:16px;color:#1e40af;font-weight:800;}
+.btn-close-modal{background:transparent;border:0;color:#94a3b8;font-size:22px;cursor:pointer;}
+
+.input-with-action{display:flex;gap:8px;}
+.input-with-action input{flex:1;}
+.btn-verify{
+  background:#eff6ff;
+  border:1.5px solid #bfdbfe;
+  color:#2563eb;
+  padding:0 13px;
+  border-radius:10px;
+  font-size:11.5px;
+  font-weight:800;
+  cursor:pointer;
+}
+.verify-status-text{font-size:11.5px;margin-top:5px;font-weight:700;}
+
+.btn-modal-action{
+  width:100%;
+  padding:12px;
+  background:linear-gradient(135deg, #2563eb, #1d4ed8);
+  color:#ffffff;
+  border:0;
+  border-radius:12px;
+  font-weight:800;
+  margin-top:10px;
+  cursor:pointer;
+  font-size:13px;
+}
+
+/* MANAGE PAYEE LIST INSIDE MODAL */
+.manage-list{
+  overflow-y:auto;
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  margin:10px 0;
+  padding-right:4px;
+}
+.manage-item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:#f8fafc;
+  border:1.5px solid #e2e8f0;
+  border-radius:12px;
+  padding:10px 12px;
+}
+.manage-item-info h4{font-size:13px;font-weight:800;color:#0f172a;}
+.manage-item-info p{font-size:11px;color:#64748b;}
+.manage-item-btns{display:flex;gap:6px;}
+.btn-item-edit{
+  background:#eff6ff;
+  border:1px solid #bfdbfe;
+  color:#2563eb;
+  padding:5px 8px;
+  border-radius:6px;
+  font-size:11px;
+  font-weight:700;
+  cursor:pointer;
+}
+.btn-item-del{
+  background:#fef2f2;
+  border:1px solid #fecaca;
+  color:#ef4444;
+  padding:5px 8px;
+  border-radius:6px;
+  font-size:11px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+@media(max-width:768px){
+  body{padding:14px 10px 24px;}
+  .card-box{padding:16px 14px;border-radius:18px;}
+  .app-layout{grid-template-columns:1fr;gap:14px;}
+  #qrcode-wrapper{width:150px;height:150px;}
+  .title-header h1{font-size:19px;}
+}
+</style>
+</head>
+<body>
+
+<div class="card-box">
+  <div class="title-header">
+    <h1>⚡ UPI Free QR Generator</h1>
+    <p>Instant UPI payment QR for Google Pay, PhonePe & Paytm</p>
+    <div class="free-badge">✓ 100% Free & Unlimited</div>
+  </div>
+
+  <div class="app-layout">
+    <div class="left-pane">
+      <div class="form-group">
+        <label>Amount (₹) [Optional]</label>
+        <input type="number" id="upi_amount" placeholder="e.g. 500" oninput="autoRefreshQR()">
+      </div>
+
+      <div class="form-group">
+        <label>Note / Remarks [Optional]</label>
+        <input type="text" id="upi_note" placeholder="Payment note" oninput="autoRefreshQR()">
+      </div>
+
+      <div class="color-row">
+        <div class="color-item">
+          <span>QR Color</span>
+          <input type="color" id="qrDark" value="#000000" onchange="autoRefreshQR()">
+        </div>
+        <div class="color-item">
+          <span>BG Color</span>
+          <input type="color" id="qrLight" value="#ffffff" onchange="autoRefreshQR()">
+        </div>
+      </div>
+
+      <button class="btn-main" onclick="handleGenerateClick()">⚡ Generate QR Code</button>
+
+      <!-- PAYEE CAROUSEL WITH MANAGE & ADD BUTTONS -->
+      <div class="payee-section">
+        <div class="payee-top-bar">
+          <span>💳 Payee (Swipe & Tap)</span>
+          <div class="payee-actions-row">
+            <button type="button" class="btn-action-small btn-manage" onclick="openManagePayeesModal()">⚙ Manage</button>
+            <button type="button" class="btn-action-small btn-add" onclick="openAddPayeeModal()">+ Add</button>
+          </div>
+        </div>
+        <div class="payee-scroll-list" id="payeeCarousel"></div>
+      </div>
+    </div>
+
+    <div class="right-pane">
+      <div class="qr-preview-box">
+        <div class="qr-payee-header" id="qrPayeeHeader">
+          <small>Paying To</small>
+          <h3 id="topPayeeName">—</h3>
+          <span id="topPayeeVpa">—</span>
+        </div>
+
+        <div id="qrcode-wrapper">
+          <div class="qr-loader" id="qrLoader">
+            <div class="spinner-3d"></div>
+            <span>Generating QR...</span>
+          </div>
+
+          <div id="qr-placeholder" class="qr-placeholder">
+            <svg viewBox="0 0 24 24">
+              <path d="M3 3h8v8H3V3zm2 2v4h4V5H5zm8-2h8v8h-8V3zm2 2v4h4V5h-4zM3 13h8v8H3v-8zm2 2v4h4v-4H5zm13-2h3v2h-3v-2zm-5 5h2v3h-2v-3zm2-3h3v2h-3v-2zm3 3h3v3h-3v-3zm-2 0h-1v-2h3v1h-2v1z"/>
+            </svg>
+            <span id="placeholderText">No Payee Added<br>Click <b>+ Add Payee</b></span>
+          </div>
+          <div id="qrcode" style="display:none;"></div>
+        </div>
+
+        <button class="btn-download" id="btn-download" onclick="downloadQR()">⬇ Download QR (PNG)</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 1. ADD / EDIT PAYEE MODAL -->
+<div class="modal-overlay" id="payeeModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 id="modalTitle">👤 Add New UPI Payee</h3>
+      <button class="btn-close-modal" onclick="closePayeeModal()">&times;</button>
+    </div>
+
+    <div class="form-group">
+      <label>UPI ID (VPA) *</label>
+      <div class="input-with-action">
+        <input type="text" id="modal_vpa" placeholder="e.g. mobile@upi / username@bank">
+        <button type="button" class="btn-verify" id="btnVerify" onclick="verifyUPI()">Verify</button>
+      </div>
+      <div id="verify_msg" class="verify-status-text" style="display:none;"></div>
+    </div>
+
+    <div class="form-group">
+      <label>Payee Name *</label>
+      <input type="text" id="modal_name" placeholder="e.g. Aman Shaikh">
+    </div>
+
+    <button type="button" class="btn-modal-action" id="btnSavePayee" onclick="savePayeeHandler()">Save & Select Payee</button>
+  </div>
+</div>
+
+<!-- 2. MANAGE PAYEES LIST MODAL -->
+<div class="modal-overlay" id="manageModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>⚙ Manage Saved Payees</h3>
+      <button class="btn-close-modal" onclick="closeManageModal()">&times;</button>
+    </div>
+
+    <div class="manage-list" id="manageListContainer">
+      <!-- Items dynamically populated -->
+    </div>
+
+    <button type="button" class="btn-modal-action" onclick="openAddFromManage()">+ Add Another Payee</button>
+  </div>
+</div>
+<script>
+let payees = [];
+let activePayeeIndex = -1;
+let editTargetIndex = -1; // -1 means adding new, >=0 means editing existing
+
+function loadPayees() {
+  const saved = localStorage.getItem("saved_upi_payees_v3");
+  if (saved) {
+    try {
+      payees = JSON.parse(saved);
+    } catch (e) {
+      payees = [];
+    }
+  } else {
+    payees = [];
+  }
+
+  renderPayeeCarousel();
+
+  if (payees.length > 0) {
+    selectPayee(0);
+  } else {
+    resetToEmptyState();
+  }
+}
+
+function savePayeesToStorage() {
+  localStorage.setItem("saved_upi_payees_v3", JSON.stringify(payees));
+}
+
+function resetToEmptyState() {
+  activePayeeIndex = -1;
+  document.getElementById("qrPayeeHeader").style.display = "none";
+  document.getElementById("qrcode").style.display = "none";
+  document.getElementById("qrcode").innerHTML = "";
+  document.getElementById("qr-placeholder").style.display = "flex";
+  document.getElementById("placeholderText").innerHTML = "No Payee Added<br>Click <b>+ Add Payee</b>";
+  document.getElementById("btn-download").style.display = "none";
+}
+
+function renderPayeeCarousel() {
+  const container = document.getElementById("payeeCarousel");
+  container.innerHTML = "";
+
+  if (payees.length === 0) {
+    container.innerHTML = `<div class="no-payee-alert">No payee added yet. Click "+ Add" to start.</div>`;
+    return;
+  }
+
+  payees.forEach((p, idx) => {
+    const card = document.createElement("div");
+    card.className = `payee-chip-card ${idx === activePayeeIndex ? "active" : ""}`;
+    card.onclick = () => selectPayee(idx);
+
+    card.innerHTML = `
+      <div class="payee-chip-name">${p.name}</div>
+      <div class="payee-chip-vpa">${p.vpa}</div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function selectPayee(idx) {
+  if (idx < 0 || idx >= payees.length) return;
+  activePayeeIndex = idx;
+
+  document.querySelectorAll(".payee-chip-card").forEach((c, i) => {
+    c.classList.toggle("active", i === idx);
+  });
+
+  const p = payees[idx];
+  document.getElementById("topPayeeName").textContent = p.name;
+  document.getElementById("topPayeeVpa").textContent = p.vpa;
+  document.getElementById("qrPayeeHeader").style.display = "block";
+
+  generateQR();
+}
+
+function handleGenerateClick() {
+  if (payees.length === 0) {
+    openAddPayeeModal();
+  } else {
+    generateQR();
+  }
+}
+
+/* ADD & EDIT MODAL HANDLERS */
+function openAddPayeeModal() {
+  editTargetIndex = -1;
+  document.getElementById("modalTitle").textContent = "👤 Add New UPI Payee";
+  document.getElementById("btnSavePayee").textContent = "Save & Select Payee";
+  document.getElementById("modal_vpa").value = "";
+  document.getElementById("modal_name").value = "";
+  resetVerifyButton();
+  document.getElementById("payeeModal").style.display = "flex";
+}
+
+function openEditPayeeModal(idx) {
+  editTargetIndex = idx;
+  const p = payees[idx];
+  document.getElementById("modalTitle").textContent = "✏️ Edit Payee Details";
+  document.getElementById("btnSavePayee").textContent = "Update Payee";
+  document.getElementById("modal_vpa").value = p.vpa;
+  document.getElementById("modal_name").value = p.name;
+  resetVerifyButton();
+  closeManageModal();
+  document.getElementById("payeeModal").style.display = "flex";
+}
+
+function closePayeeModal() {
+  document.getElementById("payeeModal").style.display = "none";
+}
+
+function resetVerifyButton() {
+  const btn = document.getElementById("btnVerify");
+  const msgEl = document.getElementById("verify_msg");
+  btn.textContent = "Verify";
+  btn.style.background = "#eff6ff";
+  btn.style.color = "#2563eb";
+  msgEl.style.display = "none";
+}
+
+/* MANAGE MODAL HANDLERS */
+function openManagePayeesModal() {
+  renderManageList();
+  document.getElementById("manageModal").style.display = "flex";
+}
+
+function closeManageModal() {
+  document.getElementById("manageModal").style.display = "none";
+}
+
+function openAddFromManage() {
+  closeManageModal();
+  openAddPayeeModal();
+}
+
+function renderManageList() {
+  const container = document.getElementById("manageListContainer");
+  container.innerHTML = "";
+
+  if (payees.length === 0) {
+    container.innerHTML = `<div class="no-payee-alert">No payees available to manage.</div>`;
+    return;
+  }
+
+  payees.forEach((p, idx) => {
+    const item = document.createElement("div");
+    item.className = "manage-item";
+    item.innerHTML = `
+      <div class="manage-item-info">
+        <h4>${p.name}</h4>
+        <p>${p.vpa}</p>
+      </div>
+      <div class="manage-item-btns">
+        <button class="btn-item-edit" onclick="openEditPayeeModal(${idx})">Edit</button>
+        <button class="btn-item-del" onclick="deletePayee(${idx})">Delete</button>
+      </div>
+    `;
+    container.appendChild(item);
+  });
+}
+
+function deletePayee(idx) {
+  if (!confirm(`Are you sure you want to remove "${payees[idx].name}"?`)) return;
+
+  payees.splice(idx, 1);
+  savePayeesToStorage();
+  renderManageList();
+  renderPayeeCarousel();
+
+  if (payees.length === 0) {
+    resetToEmptyState();
+  } else {
+    // Agar active payee delete hua to pehla select karein
+    selectPayee(0);
+  }
+}
+
+/* VERIFY BUTTON LOGIC */
+function verifyUPI() {
+  const vpa = document.getElementById("modal_vpa").value.trim();
+  const btn = document.getElementById("btnVerify");
+  const msgEl = document.getElementById("verify_msg");
+
+  if (!vpa) {
+    msgEl.style.display = "block";
+    msgEl.style.color = "#ef4444";
+    msgEl.textContent = "Please enter UPI ID first";
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = "...";
+  msgEl.style.display = "block";
+  msgEl.style.color = "#2563eb";
+  msgEl.textContent = "Checking handle...";
+
+  setTimeout(() => {
+    const upiPattern = /^[\w.-]+@[\w.-]+$/;
+    if (upiPattern.test(vpa)) {
+      btn.textContent = "✓";
+      btn.style.background = "#16a34a";
+      btn.style.color = "#fff";
+      msgEl.style.color = "#16a34a";
+      msgEl.textContent = "✓ Verified (Active handle)";
+    } else {
+      btn.textContent = "Verify";
+      btn.style.background = "#eff6ff";
+      btn.style.color = "#2563eb";
+      msgEl.style.color = "#ef4444";
+      msgEl.textContent = "✗ Invalid format (username@bank)";
+    }
+    btn.disabled = false;
+  }, 600);
+}
+
+/* SAVE OR UPDATE PAYEE */
+function savePayeeHandler() {
+  const vpa = document.getElementById("modal_vpa").value.trim();
+  const name = document.getElementById("modal_name").value.trim();
+
+  if (!vpa || !name) {
+    alert("Please enter both UPI ID and Payee Name.");
+    return;
+  }
+
+  if (editTargetIndex >= 0) {
+    // EDIT CASE
+    payees[editTargetIndex].name = name;
+    payees[editTargetIndex].vpa = vpa;
+    savePayeesToStorage();
+    renderPayeeCarousel();
+    closePayeeModal();
+    selectPayee(editTargetIndex);
+  } else {
+    // ADD NEW CASE
+    payees.push({
+      name: name,
+      vpa: vpa,
+      verified: true
+    });
+    savePayeesToStorage();
+    renderPayeeCarousel();
+    closePayeeModal();
+    selectPayee(payees.length - 1);
+  }
+}
+
+let refreshTimeout = null;
+function autoRefreshQR() {
+  if (payees.length > 0 && activePayeeIndex >= 0) {
+    clearTimeout(refreshTimeout);
+    refreshTimeout = setTimeout(() => {
+      generateQR();
+    }, 300);
+  }
+}
+
+function generateQR() {
+  if (payees.length === 0 || activePayeeIndex < 0) return;
+  const p = payees[activePayeeIndex];
+
+  const amt = document.getElementById("upi_amount").value.trim();
+  const note = encodeURIComponent(document.getElementById("upi_note").value.trim());
+
+  let uri = `upi://pay?pa=${p.vpa}&pn=${encodeURIComponent(p.name)}&cu=INR`;
+  if (amt) uri += `&am=${amt}`;
+  if (note) uri += `&tn=${note}`;
+
+  const container = document.getElementById("qrcode");
+  const placeholder = document.getElementById("qr-placeholder");
+  const dlBtn = document.getElementById("btn-download");
+  const loader = document.getElementById("qrLoader");
+
+  loader.style.display = "flex";
+
+  setTimeout(() => {
+    placeholder.style.display = "none";
+    container.style.display = "block";
+    container.innerHTML = "";
+
+    const dark = document.getElementById("qrDark").value;
+    const light = document.getElementById("qrLight").value;
+
+    new QRCode(container, {
+      text: uri,
+      width: 156,
+      height: 156,
+      colorDark: dark,
+      colorLight: light,
+      correctLevel: QRCode.CorrectLevel.H
+    });
+
+    loader.style.display = "none";
+    dlBtn.style.display = "flex";
+  }, 400);
+}
+
+function downloadQR() {
+  const img = document.querySelector("#qrcode img");
+  if (!img || !img.src) {
+    alert("Pehle QR code generate karein!");
+    return;
+  }
+  const p = payees[activePayeeIndex];
+  const safeName = (p.name || "UPI").replace(/\s+/g, "_");
+  const link = document.createElement("a");
+  link.href = img.src;
+  link.download = `${safeName}_QR_${Date.now()}.png`;
+  link.click();
+}
+
+window.onload = function() {
+  loadPayees();
+};
+</script>
+</body>
+</html>
