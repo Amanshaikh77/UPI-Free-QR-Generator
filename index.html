@@ -136,7 +136,6 @@ body{
 }
 .btn-main:active{transform:scale(0.98);}
 
-/* PAYEE CAROUSEL WITH MANAGE & ADD BUTTONS */
 .payee-section{
   background:#f8fafc;
   border:1.5px solid #e2e8f0;
@@ -204,7 +203,6 @@ body{
 
 .no-payee-alert{font-size:11px;color:#94a3b8;padding:8px 4px;}
 
-/* QR PREVIEW */
 .qr-preview-box{
   background:linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
   border-radius:20px;
@@ -304,7 +302,6 @@ body{
   box-shadow:0 10px 18px -4px rgba(22,163,74,0.35);
 }
 
-/* MODAL OVERLAYS */
 .modal-overlay{
   position:fixed;
   top:0;left:0;right:0;bottom:0;
@@ -364,7 +361,6 @@ body{
   font-size:13px;
 }
 
-/* MANAGE PAYEE LIST INSIDE MODAL */
 .manage-list{
   overflow-y:auto;
   flex:1;
@@ -450,7 +446,6 @@ body{
 
       <button class="btn-main" onclick="handleGenerateClick()">⚡ Generate QR Code</button>
 
-      <!-- PAYEE CAROUSEL WITH MANAGE & ADD BUTTONS -->
       <div class="payee-section">
         <div class="payee-top-bar">
           <span>💳 Payee (Swipe & Tap)</span>
@@ -492,7 +487,6 @@ body{
   </div>
 </div>
 
-<!-- 1. ADD / EDIT PAYEE MODAL -->
 <div class="modal-overlay" id="payeeModal">
   <div class="modal-content">
     <div class="modal-header">
@@ -518,7 +512,6 @@ body{
   </div>
 </div>
 
-<!-- 2. MANAGE PAYEES LIST MODAL -->
 <div class="modal-overlay" id="manageModal">
   <div class="modal-content">
     <div class="modal-header">
@@ -526,9 +519,7 @@ body{
       <button class="btn-close-modal" onclick="closeManageModal()">&times;</button>
     </div>
 
-    <div class="manage-list" id="manageListContainer">
-      <!-- Items dynamically populated -->
-    </div>
+    <div class="manage-list" id="manageListContainer"></div>
 
     <button type="button" class="btn-modal-action" onclick="openAddFromManage()">+ Add Another Payee</button>
   </div>
@@ -536,7 +527,7 @@ body{
 <script>
 let payees = [];
 let activePayeeIndex = -1;
-let editTargetIndex = -1; // -1 means adding new, >=0 means editing existing
+let editTargetIndex = -1;
 
 function loadPayees() {
   const saved = localStorage.getItem("saved_upi_payees_v3");
@@ -619,7 +610,6 @@ function handleGenerateClick() {
   }
 }
 
-/* ADD & EDIT MODAL HANDLERS */
 function openAddPayeeModal() {
   editTargetIndex = -1;
   document.getElementById("modalTitle").textContent = "👤 Add New UPI Payee";
@@ -655,7 +645,6 @@ function resetVerifyButton() {
   msgEl.style.display = "none";
 }
 
-/* MANAGE MODAL HANDLERS */
 function openManagePayeesModal() {
   renderManageList();
   document.getElementById("manageModal").style.display = "flex";
@@ -707,12 +696,10 @@ function deletePayee(idx) {
   if (payees.length === 0) {
     resetToEmptyState();
   } else {
-    // Agar active payee delete hua to pehla select karein
     selectPayee(0);
   }
 }
 
-/* VERIFY BUTTON LOGIC */
 function verifyUPI() {
   const vpa = document.getElementById("modal_vpa").value.trim();
   const btn = document.getElementById("btnVerify");
@@ -750,7 +737,6 @@ function verifyUPI() {
   }, 600);
 }
 
-/* SAVE OR UPDATE PAYEE */
 function savePayeeHandler() {
   const vpa = document.getElementById("modal_vpa").value.trim();
   const name = document.getElementById("modal_name").value.trim();
@@ -761,7 +747,6 @@ function savePayeeHandler() {
   }
 
   if (editTargetIndex >= 0) {
-    // EDIT CASE
     payees[editTargetIndex].name = name;
     payees[editTargetIndex].vpa = vpa;
     savePayeesToStorage();
@@ -769,7 +754,6 @@ function savePayeeHandler() {
     closePayeeModal();
     selectPayee(editTargetIndex);
   } else {
-    // ADD NEW CASE
     payees.push({
       name: name,
       vpa: vpa,
@@ -832,18 +816,36 @@ function generateQR() {
   }, 400);
 }
 
+// 100% RELIABLE DOWNLOAD (CHECKS BOTH CANVAS & IMG)
 function downloadQR() {
-  const img = document.querySelector("#qrcode img");
-  if (!img || !img.src) {
+  const container = document.getElementById("qrcode");
+  const canvas = container.querySelector("canvas");
+  const img = container.querySelector("img");
+  let dataUrl = "";
+
+  if (canvas) {
+    try {
+      dataUrl = canvas.toDataURL("image/png");
+    } catch (e) {}
+  }
+  
+  if (!dataUrl && img && img.src && img.src.startsWith("data:image")) {
+    dataUrl = img.src;
+  }
+
+  if (!dataUrl) {
     alert("Pehle QR code generate karein!");
     return;
   }
-  const p = payees[activePayeeIndex];
+
+  const p = (payees && payees.length > 0 && activePayeeIndex >= 0) ? payees[activePayeeIndex] : { name: "UPI" };
   const safeName = (p.name || "UPI").replace(/\s+/g, "_");
   const link = document.createElement("a");
-  link.href = img.src;
+  link.href = dataUrl;
   link.download = `${safeName}_QR_${Date.now()}.png`;
+  document.body.appendChild(link);
   link.click();
+  document.body.removeChild(link);
 }
 
 window.onload = function() {
