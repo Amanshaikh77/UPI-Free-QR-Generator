@@ -41,7 +41,8 @@ body{
   margin:auto 0;
 }
 
-.title-header{text-align:center;margin-bottom:18px;}
+/* HEADER WITH RIGHT SIDE HOW IT WORKS BUTTON */
+.title-header{text-align:center;margin-bottom:12px;}
 .title-header h1{
   font-size:22px;
   font-weight:900;
@@ -52,19 +53,48 @@ body{
   display:inline-block;
 }
 .title-header p{font-size:12px;color:#64748b;margin-top:3px;font-weight:500;}
+
+/* SUBHEADER ACTION BAR (BADGE + HOW IT WORKS BUTTON) */
+.sub-header-bar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:14px;
+  padding:0 2px;
+}
 .free-badge{
   display:inline-flex;
   align-items:center;
   gap:5px;
-  margin-top:6px;
   background:linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
   color:#1d4ed8;
   border:1px solid #bfdbfe;
   font-size:10px;
   font-weight:800;
-  padding:3px 12px;
+  padding:4px 12px;
   border-radius:20px;
 }
+.btn-how-it-works{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  background:#ffffff;
+  color:#2563eb;
+  border:1.5px solid #bfdbfe;
+  font-size:11px;
+  font-weight:800;
+  padding:4px 12px;
+  border-radius:20px;
+  cursor:pointer;
+  box-shadow:0 2px 6px rgba(37,99,235,0.08);
+  transition:all 0.2s;
+}
+.btn-how-it-works:hover{
+  background:#eff6ff;
+  border-color:#2563eb;
+  transform:translateY(-1px);
+}
+.btn-how-it-works:active{transform:scale(0.97);}
 
 .app-layout{
   display:grid;
@@ -100,6 +130,15 @@ body{
   box-shadow:0 0 0 4px rgba(37,99,235,0.12);
 }
 
+.input-readonly{
+  background:#f1f5f9 !important;
+  border:1.5px solid #cbd5e1 !important;
+  color:#1e3a8a !important;
+  font-weight:800 !important;
+  cursor:not-allowed !important;
+  letter-spacing:0.2px;
+}
+
 .color-row{display:flex;gap:10px;margin-bottom:12px;}
 .color-item{
   flex:1;
@@ -112,13 +151,7 @@ body{
   border:1.5px solid #e2e8f0;
 }
 .color-item span{font-size:11px;color:#64748b;font-weight:700;}
-.color-item input[type="color"]{
-  border:0;
-  background:transparent;
-  width:24px;
-  height:24px;
-  cursor:pointer;
-}
+.color-item input[type="color"]{border:0;background:transparent;width:24px;height:24px;cursor:pointer;}
 
 .btn-main{
   width:100%;
@@ -158,7 +191,6 @@ body{
   padding:5px 10px;
   border-radius:8px;
   cursor:pointer;
-  transition:all 0.15s;
 }
 .btn-manage{
   background:#eff6ff;
@@ -183,7 +215,7 @@ body{
 
 .payee-chip-card{
   flex:0 0 auto;
-  min-width:140px;
+  min-width:145px;
   background:#ffffff;
   border:1.5px solid #e2e8f0;
   border-radius:12px;
@@ -198,11 +230,13 @@ body{
   box-shadow:0 6px 14px rgba(37,99,235,0.18);
   transform:translateY(-2px);
 }
-.payee-chip-name{font-size:12px;font-weight:800;color:#0f172a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:125px;}
-.payee-chip-vpa{font-size:10px;color:#64748b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:125px;margin-top:1px;}
+.payee-chip-name{font-size:12px;font-weight:800;color:#0f172a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:130px;}
+.payee-chip-vpa{font-size:10px;color:#64748b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:130px;margin-top:1px;}
+.payee-chip-verified{font-size:8.5px;color:#16a34a;font-weight:800;margin-top:3px;}
 
 .no-payee-alert{font-size:11px;color:#94a3b8;padding:8px 4px;}
 
+/* QR PREVIEW */
 .qr-preview-box{
   background:linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
   border-radius:20px;
@@ -220,6 +254,7 @@ body{
 .qr-payee-header{text-align:center;width:100%;display:none;}
 .qr-payee-header small{font-size:9.5px;color:#2563eb;text-transform:uppercase;font-weight:800;}
 .qr-payee-header h3{font-size:15px;color:#0f172a;font-weight:800;margin-top:1px;}
+.qr-payee-header .sub-bank-name{font-size:10.5px;color:#16a34a;font-weight:700;}
 .qr-payee-header span{font-size:11px;color:#64748b;}
 
 #qrcode-wrapper{
@@ -302,6 +337,7 @@ body{
   box-shadow:0 10px 18px -4px rgba(22,163,74,0.35);
 }
 
+/* MODAL OVERLAYS */
 .modal-overlay{
   position:fixed;
   top:0;left:0;right:0;bottom:0;
@@ -315,13 +351,13 @@ body{
 }
 .modal-content{
   width:100%;
-  max-width:390px;
+  max-width:400px;
   background:#ffffff;
   border:1px solid #dbeafe;
   border-radius:20px;
   padding:20px;
   box-shadow:0 25px 50px -12px rgba(0,0,0,0.25);
-  max-height:85vh;
+  max-height:88vh;
   display:flex;
   flex-direction:column;
 }
@@ -340,11 +376,13 @@ body{
   background:#eff6ff;
   border:1.5px solid #bfdbfe;
   color:#2563eb;
-  padding:0 13px;
+  padding:0 14px;
   border-radius:10px;
   font-size:11.5px;
   font-weight:800;
   cursor:pointer;
+  transition:all 0.2s;
+  min-width:65px;
 }
 .verify-status-text{font-size:11.5px;margin-top:5px;font-weight:700;}
 
@@ -361,6 +399,60 @@ body{
   font-size:13px;
 }
 
+/* HOW IT WORKS MODAL DETAILS */
+.hiw-body{
+  overflow-y:auto;
+  padding-right:4px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  margin-top:4px;
+}
+.hiw-step{
+  display:flex;
+  gap:12px;
+  background:#f8fafc;
+  border:1px solid #e2e8f0;
+  border-radius:14px;
+  padding:12px;
+  align-items:flex-start;
+}
+.hiw-step-icon{
+  width:32px;
+  height:32px;
+  border-radius:50%;
+  background:linear-gradient(135deg, #2563eb, #1d4ed8);
+  color:#fff;
+  font-size:13px;
+  font-weight:900;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+}
+.hiw-step-text h4{
+  font-size:13px;
+  color:#0f172a;
+  font-weight:800;
+  margin-bottom:2px;
+}
+.hiw-step-text p{
+  font-size:11.5px;
+  color:#64748b;
+  line-height:1.4;
+}
+.hiw-features-box{
+  background:#eff6ff;
+  border:1px solid #bfdbfe;
+  border-radius:12px;
+  padding:12px;
+  font-size:11.5px;
+  color:#1e40af;
+  line-height:1.45;
+}
+.hiw-features-box b{color:#1d4ed8;}
+
+/* MANAGE PAYEE LIST */
 .manage-list{
   overflow-y:auto;
   flex:1;
@@ -381,17 +473,8 @@ body{
 }
 .manage-item-info h4{font-size:13px;font-weight:800;color:#0f172a;}
 .manage-item-info p{font-size:11px;color:#64748b;}
+.manage-item-info .verified-tag{font-size:9.5px;color:#16a34a;font-weight:800;}
 .manage-item-btns{display:flex;gap:6px;}
-.btn-item-edit{
-  background:#eff6ff;
-  border:1px solid #bfdbfe;
-  color:#2563eb;
-  padding:5px 8px;
-  border-radius:6px;
-  font-size:11px;
-  font-weight:700;
-  cursor:pointer;
-}
 .btn-item-del{
   background:#fef2f2;
   border:1px solid #fecaca;
@@ -418,7 +501,14 @@ body{
   <div class="title-header">
     <h1>⚡ UPI Free QR Generator</h1>
     <p>Instant UPI payment QR for Google Pay, PhonePe & Paytm</p>
+  </div>
+
+  <!-- SUBHEADER ACTION BAR (MARK LOCATION: HOW IT WORKS BUTTON) -->
+  <div class="sub-header-bar">
     <div class="free-badge">✓ 100% Free & Unlimited</div>
+    <button type="button" class="btn-how-it-works" onclick="openHowItWorksModal()">
+      <span>ℹ️</span> How It Works
+    </button>
   </div>
 
   <div class="app-layout">
@@ -446,6 +536,7 @@ body{
 
       <button class="btn-main" onclick="handleGenerateClick()">⚡ Generate QR Code</button>
 
+      <!-- PAYEE CAROUSEL -->
       <div class="payee-section">
         <div class="payee-top-bar">
           <span>💳 Payee (Swipe & Tap)</span>
@@ -463,6 +554,7 @@ body{
         <div class="qr-payee-header" id="qrPayeeHeader">
           <small>Paying To</small>
           <h3 id="topPayeeName">—</h3>
+          <div class="sub-bank-name" id="topBankName">✓ Verified NPCI Account</div>
           <span id="topPayeeVpa">—</span>
         </div>
 
@@ -487,6 +579,57 @@ body{
   </div>
 </div>
 
+<!-- HOW IT WORKS MODAL -->
+<div class="modal-overlay" id="howItWorksModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>🚀 How This Tool Works</h3>
+      <button class="btn-close-modal" onclick="closeHowItWorksModal()">&times;</button>
+    </div>
+
+    <div class="hiw-body">
+      <div class="hiw-step">
+        <div class="hiw-step-icon">1</div>
+        <div class="hiw-step-text">
+          <h4>Add & Verify Payee Account</h4>
+          <p>Apna UPI ID (VPA) enter karein aur <b>Verify</b> dabayein. Cashfree / NPCI gateway se account check hokar Bank Registered Name lock ho jayega.</p>
+        </div>
+      </div>
+
+      <div class="hiw-step">
+        <div class="hiw-step-icon">2</div>
+        <div class="hiw-step-text">
+          <h4>Custom Amount & Note (Optional)</h4>
+          <p>Optional payment amount aur remarks daliye. Isse scan karne wale user ko amount type nahi karni padegi aur directly pre-filled aayegi.</p>
+        </div>
+      </div>
+
+      <div class="hiw-step">
+        <div class="hiw-step-icon">3</div>
+        <div class="hiw-step-text">
+          <h4>Instant High-Res QR Generation</h4>
+          <p>NPCI standard UPI deep-link format ke sath client-side HD vector QR code render hota hai jise Google Pay, PhonePe, Paytm ya BHIM instantly scan kar sakte hain.</p>
+        </div>
+      </div>
+
+      <div class="hiw-step">
+        <div class="hiw-step-icon">4</div>
+        <div class="hiw-step-text">
+          <h4>Download & Local Storage</h4>
+          <p>1-Click me clear PNG format me QR download karein. Aapke payees aapke browser ke private localStorage me safe rehte hain bina kisi login ke.</p>
+        </div>
+      </div>
+
+      <div class="hiw-features-box">
+        🔒 <b>Zero Storage Privacy:</b> Aapki transaction details aur payment data kisi external server par save nahi hoti. Sabhi operations 100% encrypted aur browser-side execute hote hain.
+      </div>
+    </div>
+
+    <button type="button" class="btn-modal-action" onclick="closeHowItWorksModal()">Got It, Thanks!</button>
+  </div>
+</div>
+
+<!-- ADD / EDIT PAYEE MODAL WITH AUTOMATION BANKING NAME -->
 <div class="modal-overlay" id="payeeModal">
   <div class="modal-content">
     <div class="modal-header">
@@ -497,21 +640,27 @@ body{
     <div class="form-group">
       <label>UPI ID (VPA) *</label>
       <div class="input-with-action">
-        <input type="text" id="modal_vpa" placeholder="e.g. mobile@upi / username@bank">
-        <button type="button" class="btn-verify" id="btnVerify" onclick="verifyUPI()">Verify</button>
+        <input type="text" id="modal_vpa" placeholder="7281950223@ybl" autocomplete="off">
+        <button type="button" class="btn-verify" id="btnVerify" onclick="verifyUPIWithCashfree()">Verify</button>
       </div>
       <div id="verify_msg" class="verify-status-text" style="display:none;"></div>
     </div>
 
     <div class="form-group">
-      <label>Payee Name *</label>
-      <input type="text" id="modal_name" placeholder="e.g. Aman Shaikh">
+      <label>BANKING REGISTERED NAME (AUTOMATION) 🔒</label>
+      <input type="text" id="modal_banking_name" class="input-readonly" readonly placeholder="Auto-fills after verification...">
+    </div>
+
+    <div class="form-group">
+      <label>PAYEE DISPLAY NAME (OPTIONAL)</label>
+      <input type="text" id="modal_name" placeholder="Auto-populated or custom name">
     </div>
 
     <button type="button" class="btn-modal-action" id="btnSavePayee" onclick="savePayeeHandler()">Save & Select Payee</button>
   </div>
 </div>
 
+<!-- MANAGE PAYEES MODAL -->
 <div class="modal-overlay" id="manageModal">
   <div class="modal-content">
     <div class="modal-header">
@@ -527,10 +676,19 @@ body{
 <script>
 let payees = [];
 let activePayeeIndex = -1;
-let editTargetIndex = -1;
+let currentVerifiedBankName = "";
+
+/* HOW IT WORKS MODAL FUNCTIONS */
+function openHowItWorksModal() {
+  document.getElementById("howItWorksModal").style.display = "flex";
+}
+
+function closeHowItWorksModal() {
+  document.getElementById("howItWorksModal").style.display = "none";
+}
 
 function loadPayees() {
-  const saved = localStorage.getItem("saved_upi_payees_v3");
+  const saved = localStorage.getItem("saved_upi_payees_cashfree");
   if (saved) {
     try {
       payees = JSON.parse(saved);
@@ -551,7 +709,7 @@ function loadPayees() {
 }
 
 function savePayeesToStorage() {
-  localStorage.setItem("saved_upi_payees_v3", JSON.stringify(payees));
+  localStorage.setItem("saved_upi_payees_cashfree", JSON.stringify(payees));
 }
 
 function resetToEmptyState() {
@@ -581,6 +739,7 @@ function renderPayeeCarousel() {
     card.innerHTML = `
       <div class="payee-chip-name">${p.name}</div>
       <div class="payee-chip-vpa">${p.vpa}</div>
+      <div class="payee-chip-verified">✓ ${p.banking_name || 'Verified'}</div>
     `;
     container.appendChild(card);
   });
@@ -596,6 +755,7 @@ function selectPayee(idx) {
 
   const p = payees[idx];
   document.getElementById("topPayeeName").textContent = p.name;
+  document.getElementById("topBankName").textContent = "✓ Name at Bank: " + (p.banking_name || p.name);
   document.getElementById("topPayeeVpa").textContent = p.vpa;
   document.getElementById("qrPayeeHeader").style.display = "block";
 
@@ -611,24 +771,13 @@ function handleGenerateClick() {
 }
 
 function openAddPayeeModal() {
-  editTargetIndex = -1;
   document.getElementById("modalTitle").textContent = "👤 Add New UPI Payee";
   document.getElementById("btnSavePayee").textContent = "Save & Select Payee";
   document.getElementById("modal_vpa").value = "";
   document.getElementById("modal_name").value = "";
+  document.getElementById("modal_banking_name").value = "";
+  currentVerifiedBankName = "";
   resetVerifyButton();
-  document.getElementById("payeeModal").style.display = "flex";
-}
-
-function openEditPayeeModal(idx) {
-  editTargetIndex = idx;
-  const p = payees[idx];
-  document.getElementById("modalTitle").textContent = "✏️ Edit Payee Details";
-  document.getElementById("btnSavePayee").textContent = "Update Payee";
-  document.getElementById("modal_vpa").value = p.vpa;
-  document.getElementById("modal_name").value = p.name;
-  resetVerifyButton();
-  closeManageModal();
   document.getElementById("payeeModal").style.display = "flex";
 }
 
@@ -675,9 +824,9 @@ function renderManageList() {
       <div class="manage-item-info">
         <h4>${p.name}</h4>
         <p>${p.vpa}</p>
+        <span class="verified-tag">Bank: ${p.banking_name || 'Verified'}</span>
       </div>
       <div class="manage-item-btns">
-        <button class="btn-item-edit" onclick="openEditPayeeModal(${idx})">Edit</button>
         <button class="btn-item-del" onclick="deletePayee(${idx})">Delete</button>
       </div>
     `;
@@ -700,10 +849,12 @@ function deletePayee(idx) {
   }
 }
 
-function verifyUPI() {
+async function verifyUPIWithCashfree() {
   const vpa = document.getElementById("modal_vpa").value.trim();
   const btn = document.getElementById("btnVerify");
   const msgEl = document.getElementById("verify_msg");
+  const bankField = document.getElementById("modal_banking_name");
+  const nameField = document.getElementById("modal_name");
 
   if (!vpa) {
     msgEl.style.display = "block";
@@ -716,54 +867,72 @@ function verifyUPI() {
   btn.textContent = "...";
   msgEl.style.display = "block";
   msgEl.style.color = "#2563eb";
-  msgEl.textContent = "Checking handle...";
+  msgEl.textContent = "Verifying with NPCI / Cashfree...";
 
-  setTimeout(() => {
-    const upiPattern = /^[\w.-]+@[\w.-]+$/;
-    if (upiPattern.test(vpa)) {
+  try {
+    const response = await fetch('/api/verify-upi', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ vpa: vpa })
+    });
+
+    const data = await response.json();
+
+    if (response.ok && data.success) {
       btn.textContent = "✓";
       btn.style.background = "#16a34a";
       btn.style.color = "#fff";
+      
       msgEl.style.color = "#16a34a";
-      msgEl.textContent = "✓ Verified (Active handle)";
+      msgEl.textContent = `✓ UPI Verified! Registered Name: ${data.banking_name}`;
+
+      bankField.value = data.banking_name;
+      currentVerifiedBankName = data.banking_name;
+
+      if (!nameField.value.trim()) {
+        nameField.value = data.banking_name;
+      }
     } else {
-      btn.textContent = "Verify";
-      btn.style.background = "#eff6ff";
-      btn.style.color = "#2563eb";
-      msgEl.style.color = "#ef4444";
-      msgEl.textContent = "✗ Invalid format (username@bank)";
+      throw new Error(data.message || "UPI verification failed");
     }
+  } catch (err) {
+    btn.textContent = "Verify";
+    btn.style.background = "#eff6ff";
+    btn.style.color = "#2563eb";
+    msgEl.style.color = "#ef4444";
+    msgEl.textContent = "✗ " + (err.message || "Failed to verify UPI ID");
+    bankField.value = "";
+    currentVerifiedBankName = "";
+  } finally {
     btn.disabled = false;
-  }, 600);
+  }
 }
 
 function savePayeeHandler() {
   const vpa = document.getElementById("modal_vpa").value.trim();
-  const name = document.getElementById("modal_name").value.trim();
+  let name = document.getElementById("modal_name").value.trim();
+  const bankName = document.getElementById("modal_banking_name").value.trim();
 
-  if (!vpa || !name) {
-    alert("Please enter both UPI ID and Payee Name.");
+  if (!vpa) {
+    alert("Please enter a valid UPI ID (VPA).");
     return;
   }
 
-  if (editTargetIndex >= 0) {
-    payees[editTargetIndex].name = name;
-    payees[editTargetIndex].vpa = vpa;
-    savePayeesToStorage();
-    renderPayeeCarousel();
-    closePayeeModal();
-    selectPayee(editTargetIndex);
-  } else {
-    payees.push({
-      name: name,
-      vpa: vpa,
-      verified: true
-    });
-    savePayeesToStorage();
-    renderPayeeCarousel();
-    closePayeeModal();
-    selectPayee(payees.length - 1);
+  if (!name) {
+    name = bankName || vpa.split('@')[0];
   }
+
+  payees.push({
+    name: name,
+    vpa: vpa,
+    banking_name: bankName || name,
+    verified: true
+  });
+
+  savePayeesToStorage();
+  renderPayeeCarousel();
+  closePayeeModal();
+  selectPayee(payees.length - 1);
 }
 
 let refreshTimeout = null;
@@ -783,7 +952,7 @@ function generateQR() {
   const amt = document.getElementById("upi_amount").value.trim();
   const note = encodeURIComponent(document.getElementById("upi_note").value.trim());
 
-  let uri = `upi://pay?pa=${p.vpa}&pn=${encodeURIComponent(p.name)}&cu=INR`;
+  let uri = `upi://pay?pa=${p.vpa}&pn=${encodeURIComponent(p.banking_name || p.name)}&cu=INR`;
   if (amt) uri += `&am=${amt}`;
   if (note) uri += `&tn=${note}`;
 
@@ -816,7 +985,6 @@ function generateQR() {
   }, 400);
 }
 
-// 100% RELIABLE DOWNLOAD (CHECKS BOTH CANVAS & IMG)
 function downloadQR() {
   const container = document.getElementById("qrcode");
   const canvas = container.querySelector("canvas");
