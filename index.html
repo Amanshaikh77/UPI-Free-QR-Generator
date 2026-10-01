@@ -220,7 +220,6 @@ body{
 
 .no-payee-alert{font-size:11px;color:#94a3b8;padding:8px 4px;}
 
-/* QR PREVIEW CARD */
 .qr-preview-box{
   background:linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
   border-radius:20px;
@@ -320,7 +319,6 @@ body{
   box-shadow:0 10px 18px -4px rgba(22,163,74,0.35);
 }
 
-/* MODALS */
 .modal-overlay{
   position:fixed;
   top:0;left:0;right:0;bottom:0;
@@ -381,7 +379,6 @@ body{
   font-size:13px;
 }
 
-/* HOW IT WORKS */
 .hiw-body{
   overflow-y:auto;
   padding-right:4px;
@@ -424,7 +421,6 @@ body{
   line-height:1.45;
 }
 
-/* MANAGE PAYEES */
 .manage-list{
   overflow-y:auto;
   flex:1;
@@ -547,7 +543,6 @@ body{
   </div>
 </div>
 
-<!-- HOW IT WORKS MODAL -->
 <div class="modal-overlay" id="howItWorksModal">
   <div class="modal-content">
     <div class="modal-header">
@@ -560,7 +555,7 @@ body{
         <div class="hiw-step-icon">1</div>
         <div class="hiw-step-text">
           <h4>Add & Verify Payee Account</h4>
-          <p>Apna UPI ID (VPA) enter karein aur <b>Verify</b> dabayein. NPCI standard handle format check hokar verify ho jayega.</p>
+          <p>Apna UPI ID enter karein aur <b>Verify</b> dabayein. NPCI standard handle format check hokar account verify ho jayega.</p>
         </div>
       </div>
 
@@ -568,7 +563,7 @@ body{
         <div class="hiw-step-icon">2</div>
         <div class="hiw-step-text">
           <h4>Custom Amount & Note (Optional)</h4>
-          <p>Payment amount aur remarks enter kijiye. Isse scan karne wale user ko amount type nahi karni padegi aur directly pre-filled aayegi.</p>
+          <p>Payment amount aur remarks enter kijiye. Isse scan karne wale user ko amount pre-filled milti hai.</p>
         </div>
       </div>
 
@@ -576,7 +571,7 @@ body{
         <div class="hiw-step-icon">3</div>
         <div class="hiw-step-text">
           <h4>Instant High-Res QR Generation</h4>
-          <p>NPCI standard UPI deep-link format ke sath client-side HD QR code render hota hai jise Google Pay, PhonePe, Paytm ya BHIM instantly scan kar sakte hain.</p>
+          <p>NPCI standard UPI deep-link format ke sath instant QR code render hota hai jise koi bhi UPI app scan kar sakta hai.</p>
         </div>
       </div>
 
@@ -584,12 +579,12 @@ body{
         <div class="hiw-step-icon">4</div>
         <div class="hiw-step-text">
           <h4>Cool Branded Card Download</h4>
-          <p>Download karne par boring square QR nahi, balki ek stylish digital payment card save hota hai jisme aapka Payee Name aur UPI ID laga hota hai.</p>
+          <p>Download karne par Payee Name aur UPI ID ke sath clear printable digital payment card save hota hai.</p>
         </div>
       </div>
 
       <div class="hiw-features-box">
-        🔒 <b>Zero Storage Privacy:</b> Aapki transaction details aur payment data kisi external server par save nahi hoti. Sabhi operations 100% encrypted aur browser-side execute hote hain.
+        🔒 <b>Zero Storage Privacy:</b> Koi bhi payment data external server par save nahi hota. Sabhi operations aapke browser me hi execute hote hain.
       </div>
     </div>
 
@@ -597,7 +592,7 @@ body{
   </div>
 </div>
 
-<!-- ADD / EDIT PAYEE MODAL (CLEAN - NO BANKING NAME FIELD) -->
+<!-- ADD / EDIT PAYEE MODAL (GENERIC PLACEHOLDERS) -->
 <div class="modal-overlay" id="payeeModal">
   <div class="modal-content">
     <div class="modal-header">
@@ -608,7 +603,7 @@ body{
     <div class="form-group">
       <label>UPI ID (VPA) *</label>
       <div class="input-with-action">
-        <input type="text" id="modal_vpa" placeholder="7281950223@ybl" autocomplete="off">
+        <input type="text" id="modal_vpa" placeholder="e.g. username@bank" autocomplete="off">
         <button type="button" class="btn-verify" id="btnVerify" onclick="verifyUPIClean()">Verify</button>
       </div>
       <div id="verify_msg" class="verify-status-text" style="display:none;"></div>
@@ -616,14 +611,13 @@ body{
 
     <div class="form-group">
       <label>PAYEE NAME *</label>
-      <input type="text" id="modal_name" placeholder="e.g. Dilshan Ahmad">
+      <input type="text" id="modal_name" placeholder="e.g. Merchant Name">
     </div>
 
     <button type="button" class="btn-modal-action" id="btnSavePayee" onclick="savePayeeHandler()">Save & Select Payee</button>
   </div>
 </div>
 
-<!-- MANAGE PAYEES MODAL -->
 <div class="modal-overlay" id="manageModal">
   <div class="modal-content">
     <div class="modal-header">
@@ -649,7 +643,7 @@ function closeHowItWorksModal() {
 }
 
 function loadPayees() {
-  const saved = localStorage.getItem("saved_upi_payees_v4");
+  const saved = localStorage.getItem("saved_upi_payees_v5");
   if (saved) {
     try {
       payees = JSON.parse(saved);
@@ -670,7 +664,7 @@ function loadPayees() {
 }
 
 function savePayeesToStorage() {
-  localStorage.setItem("saved_upi_payees_v4", JSON.stringify(payees));
+  localStorage.setItem("saved_upi_payees_v5", JSON.stringify(payees));
 }
 
 function resetToEmptyState() {
@@ -806,7 +800,6 @@ function deletePayee(idx) {
   }
 }
 
-// 100% ERROR-FREE INSTANT VERIFICATION (NO CRASH / NO JSON ERROR)
 function verifyUPIClean() {
   const vpa = document.getElementById("modal_vpa").value.trim();
   const btn = document.getElementById("btnVerify");
@@ -915,7 +908,6 @@ function generateQR() {
   }, 400);
 }
 
-// COOL BRANDED PAYMENT CARD GENERATOR (HIGH RESOLUTION)
 function downloadCoolBrandedQR() {
   const container = document.getElementById("qrcode");
   const canvasSource = container.querySelector("canvas");
@@ -934,18 +926,15 @@ function downloadCoolBrandedQR() {
   c.height = 760;
   const ctx = c.getContext("2d");
 
-  // White Card Background
   ctx.fillStyle = "#ffffff";
   ctx.fillRect(0, 0, c.width, c.height);
 
-  // Royal Blue Gradient Header
   const grad = ctx.createLinearGradient(0, 0, c.width, 130);
   grad.addColorStop(0, "#1e3a8a");
   grad.addColorStop(1, "#2563eb");
   ctx.fillStyle = grad;
   ctx.fillRect(0, 0, c.width, 130);
 
-  // Title on Header
   ctx.fillStyle = "#ffffff";
   ctx.font = "bold 24px -apple-system, BlinkMacSystemFont, Segoe UI, Roboto";
   ctx.textAlign = "center";
@@ -955,7 +944,6 @@ function downloadCoolBrandedQR() {
   ctx.font = "600 13px -apple-system, BlinkMacSystemFont, Segoe UI, Roboto";
   ctx.fillText("Instant NPCI Dynamic Payment QR", c.width / 2, 86);
 
-  // Payee Name & Details
   ctx.fillStyle = "#0f172a";
   ctx.font = "bold 23px -apple-system, BlinkMacSystemFont, Segoe UI, Roboto";
   ctx.fillText(p.name, c.width / 2, 185);
@@ -964,14 +952,12 @@ function downloadCoolBrandedQR() {
   ctx.font = "600 15px -apple-system, BlinkMacSystemFont, Segoe UI, Roboto";
   ctx.fillText(p.vpa, c.width / 2, 212);
 
-  // Optional Amount
   if (amt) {
     ctx.fillStyle = "#0f172a";
     ctx.font = "bold 20px -apple-system, BlinkMacSystemFont, Segoe UI, Roboto";
     ctx.fillText("₹" + amt, c.width / 2, 244);
   }
 
-  // Draw Center QR
   const qrImage = new Image();
   qrImage.crossOrigin = "anonymous";
   
@@ -980,7 +966,6 @@ function downloadCoolBrandedQR() {
     const qrX = (c.width - qrSize) / 2;
     const qrY = amt ? 265 : 245;
 
-    // QR Outline Frame
     ctx.fillStyle = "#f8fafc";
     ctx.strokeStyle = "#e2e8f0";
     ctx.lineWidth = 2;
@@ -990,7 +975,6 @@ function downloadCoolBrandedQR() {
 
     ctx.drawImage(qrImage, qrX, qrY, qrSize, qrSize);
 
-    // Footer
     const footerY = qrY + qrSize + 50;
     ctx.fillStyle = "#475569";
     ctx.font = "bold 13px -apple-system, BlinkMacSystemFont, Segoe UI, Roboto";
